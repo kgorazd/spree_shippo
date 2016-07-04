@@ -53,6 +53,15 @@ For individual stores, however, you can easily integrate your store directly on 
 
 If you have a specific request regarding the integration of multiple stores, please contact support@goshippo.com. Our team will help you find the best solution! If you're an individual store, just go ahead and connect instantly at [https://goshippo.com/user/connect/](https://goshippo.com/user/connect/).
 
+To integrate GoShippo Webhooks, the Webhook URLs need to be updated on GoShippo. On the API settings page on GoShippo, add the URL for webhook as follows:
+
+```
+"STORE URL"+/api/goshipments/update?token="API ACCESS TOKEN"
+
+https://example.com/api/goshipments/update?token=fa8f85cc150c015qa2ff7c5cc100f533f623df928d0ae147
+
+```
+
 
 Testing
 -------
