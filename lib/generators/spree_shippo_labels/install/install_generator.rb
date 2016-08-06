@@ -4,10 +4,10 @@ module SpreeShippoLabels
 
       class_option :auto_run_migrations, :type => :boolean, :default => false
 
-      #def add_javascripts
+      def add_javascripts
         #append_file 'vendor/assets/javascripts/spree/frontend/all.js', "//= require spree/frontend/spree_shippo_labels\n"
-        #append_file 'vendor/assets/javascripts/spree/backend/all.js', "//= require spree/backend/spree_shippo_labels\n"
-      #end
+        append_file 'vendor/assets/javascripts/spree/backend/all.js', "//= require spree/backend/spree_shippo_labels\n"
+      end
 
       #def add_stylesheets
         #inject_into_file 'vendor/assets/stylesheets/spree/frontend/all.css', " *= require spree/frontend/spree_shippo_labels\n", :before => /\*\//, :verbose => true

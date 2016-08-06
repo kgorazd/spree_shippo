@@ -1,4 +1,11 @@
-class Spree::Api::GoshipmentsController < Spree::Api::BaseController
+module Spree
+  module Api
+    class GoshipmentsController < BaseController
+
+
+
+
+#class Spree::Api::GoshipmentsController < Spree::Api::BaseController
     
     skip_before_filter :verify_authenticity_token
 
@@ -30,5 +37,7 @@ class Spree::Api::GoshipmentsController < Spree::Api::BaseController
 
         render :nothing => true, :status => 200
     end    
+end
+end
 end
  

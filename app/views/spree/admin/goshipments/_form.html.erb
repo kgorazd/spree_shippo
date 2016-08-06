@@ -1,0 +1,74 @@
+<%= form_tag admin_goshipments_create_parcel_path, :id => 'parcel-form' do %>
+    <%= hidden_field_tag :shipment_id, params[:shipment_id]%> <br/>
+  <div class="row">
+    <div class="col-sm-5 col-xs-8 margin-sm-t-sm">
+      <label>Package Type</label>
+      <%= select_tag :spree_shipping_label_id, options_from_collection_for_select(PackageType.all, "id", "shipment__box_details"), {:class => 'select2 fullwidth'} %>
+    </div>
+  </div>
+  <div id="weight_packaging">
+    <div>
+      <label>Weight</label>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-4 col-xs-6 margin-sm-t-sm">
+        <%= number_field_tag :weight, nil, :size => 25, :class => 'form-control', required: true %>
+      </div>
+      <div class="col-sm-4 col-xs-8">
+        <%= select_tag :mass_unit , options_for_select(PackageType.mass_units), {:class => 'select2 fullwidth'} %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3">
+      <label>Shipment Date</label>
+      <div class="row">
+        <div class="col-sm-4 col-xs-8">
+          <%= text_field_tag :shipment_date %>
+        </div>
+      </div>      
+    </div>
+    <div class="col-xs-6">
+      <label>Buy additional Insurance</label>
+        <div class="row">
+          <div class="col-xs-6">
+            <%= number_field_tag :insurance_amount,0, min: 0, :class => 'form-control' %> <br/>
+          </div>
+          <div class="col-xs-6">
+            <%= select_tag :insurance_currency , options_for_select(PackageType.insurance_currency), {:class => 'select2 fullwidth'} %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row padding-t-sm">
+      <div class="col-sm-6 col-xs-12">
+        <div class="checkbox">
+          <%= hidden_field_tag :Add_signature_confirmation, false %>
+          <%= check_box_tag :Add_signature_confirmation, true, true %>
+          <label>Add signature confirmation</label>
+        </div>
+        <div class="checkbox">
+          <%= hidden_field_tag :Also_create_a_return_label, false %>
+          <%= check_box_tag :Residential_recipient, true, true %>
+          <label>Residential recipient</label>
+        </div>
+        <div class="checkbox">
+          <%= hidden_field_tag :Also_create_a_return_label, false %>
+          <%= check_box_tag :Also_create_a_return_label %>        
+          <label>Also create a return label</label>
+        </div>
+        <div class="checkbox">
+          <%= hidden_field_tag :Also_create_a_return_label, false %>
+          <%= check_box_tag :Parcel_name_only, true, true %>        
+          <label>Use parcel name only</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="four columns alpha">
+    <div class="field">
+      <%= button "Select Shipping Rates" %>
+    </div>
+  </div>
+</div>
+<% end %>

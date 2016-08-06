@@ -1,0 +1,49 @@
+<div class="col-xs-12 lh-40 height-40" style="margin-bottom: 12px;">
+  <h2 class="margin-b-none margin-t-xs color-mediumgrey"><i class="text-center fa fa-inbox width-25 padding-r-sm"></i>&nbsp;Step 2 of 3&nbsp;&nbsp;<i class="fa font-sm fa-caret-right"></i>&nbsp;&nbsp;Select Shipping Rate</h2>
+</div>
+<div class="col-sm-8 padding-t-sm">
+  <div id="appender">
+    <div id="ember1709" class="ember-view">
+      <div id="ember1720" class="ember-view padding-v-sm border-1-b-grey hover-grey">
+        <div class="row">
+            <%= form_tag admin_goshipments_return_transactions_path do %>
+              <% if @goshippo_ratelist["results"].present? %>
+                <%= hidden_field_tag :shipment_id, params[:shipment_id]%>
+                <% @goshippo_ratelist["results"].each do |result| %>
+                  <div style="height: 51px;">
+                    <%= hidden_field_tag :object_id, (result['object_id']) %>
+                    <div class="col-md-2 col-xs-12 hidden-sm">
+                      <%= image_tag (result['provider_image_75']) %>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 font-sm">
+                      <span class="link-black weight-500"><%= result['servicelevel_name'] %></span>
+                    </div>
+                    <div class="col-md-1 col-sm-4 col-xs-12 font-sm padding-r-none">
+                      <span class="color-darkgrey weight-400"><%= result['days'] %>days</span>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12 font-sm color-darkgrey text-right weight-400">
+                      <%= result['amount_local'] %>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 font-sm text-center">
+                      <%= button "Buy Label" %> 
+                    </div><br>
+                  </div>
+                <%end %>
+              <%end %>  
+            <%end %>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6 lh-35">
+      <div class="font-xs color-mediumlightgrey padding-l-sm margin-b-sm" id="transit_time_note">Transit time is a non-guaranteed average. <i id="ember1721" data-toggle="tooltip" data-title="The number of days is the best estimate available. Some carriers guarantee this delivery time." class="ember-view fa fa-question-circle text-grey" data-original-title="" title=""><!----></i></div>
+    </div>
+    <div class="col-xs-6">
+    </div>
+  </div>
+  <div id="error_appender" class="font-xs color-mediumgrey">
+    <ul class="list-noblt" id="error_">
+    </ul>
+  </div>
+</div>
