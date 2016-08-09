@@ -1,0 +1,37 @@
+<div data-hook="admin_user_lifetime_stats" class="panel panel-default">
+<div class="panel-heading">
+    <h1 class="panel-title">
+      <%= "Customer's Order History" %>
+    </h1>
+  </div>
+  <%= paginate orders %>
+<% if orders.any? %>
+    <%# TODO add search interface %>
+    <table class="table table-condensed table-bordered" id="listing_orders" data-hook>
+      <thead>
+        <tr data-hook="admin_orders_index_headers">
+          <th><%= I18n.t(:completed_at, :scope => 'activerecord.attributes.spree/order')%></th>
+          <th><%= I18n.t(:number, :scope => 'activerecord.attributes.spree/order')%></th>
+          <th><%= I18n.t(:state, :scope => 'activerecord.attributes.spree/order') %></th>
+          <th><%=I18n.t(:total, :scope => 'activerecord.attributes.spree/order')%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% orders.each do |order| %>
+        <tr data-hook="admin_orders_index_rows" class="state-<%= order.state.downcase %> <%= cycle('odd', 'even') %>">
+          <td class="order-completed-at"><%= l(order.completed_at.to_date) if order.completed_at %></td>
+          <td class="order-number"><%= link_to order.number, edit_admin_order_path(order) %></td>
+          <td class="order-state"><%= order.summary_state %> </td>
+          <td class="order-total"><%= order.display_total.to_html %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="alert alert-info no-objects-found">
+      <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::Order)) %>,
+      <%= link_to Spree.t(:add_one), spree.new_admin_order_path %>!
+    </div>
+  <% end %>
+  <%= paginate orders %>
+</div>

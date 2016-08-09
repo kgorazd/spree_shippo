@@ -4,14 +4,29 @@
 
   <div class="panel-heading stock-location no-borderb" data-hook="stock-location">
     <h1 class="panel-title">
-      <span class="shipment-number"><%= shipment.number %></span>
-      -
-      <span class="shipment-state"><%= Spree.t("shipment_states.#{shipment.state}") %></span>
-      <%= Spree.t(:package_from) %>
-      <strong class="stock-location-name" data-hook="stock-location-name">'<%= shipment.stock_location.name %>'</strong>
+      <% url= shipment_label_url(shipment.id) %>
+      <% return_url = shipment_return_label_url(shipment.id) %>
+      <% create_string = "Create Shipping Label" %>
+      <% print_string  = "Print Label" %>
+      <% refund_string = "Refund Label" %>
+      <% if @order.approved? %> 
+        <% if url.present? %>
+          <%= link_to print_string, url, :target=> "_blank", :class => "btn btn-success" %>
+          <% if return_url.present? %>
+            <%= link_to "Print Return Label", return_url, :target=> "_blank", :class => "btn btn-success" %>
+          <% else %>
+            <%= link_to "create return label", admin_goshipments_return_parcel_path(:shipment_id =>shipment.id), :class => "btn btn-primary" %>
+          <% end %>
+        <% else %>
+          <%= link_to create_string, admin_goshipments_new_parcel_path(:shipment_id =>shipment.id), :class => "btn btn-primary" %>
+        <% end %>
       <% if shipment.ready? and can? :update, shipment %>
-        <%= link_to Spree.t(:ship), 'javascript:;', class: 'ship pull-right btn btn-success', data: { 'shipment-number' => shipment.number } %>
+        <%= link_to 'Send Shipping Confirmation', 'javascript:;', class: 'ship pull-right btn btn-success', data: { 'shipment-number' => shipment.number } %>
         <div class='clearfix'></div>
+      <% elsif shipment.shipped? %>
+        <a class="pull-right btn btn-default" disabled="disabled" stype="float:right">Shipped and Confirmation Sent</a>
+        <div class='clearfix'></div>
+      <% end %>
       <% end %>
     </h1>
   </div>
@@ -91,7 +106,8 @@
       <tr class="show-tracking total">
         <td colspan="5" class="tracking-value">
           <% if shipment.tracking.present? %>
-            <strong><%= Spree.t(:tracking) %>:</strong> <%= link_to shipment.tracking, shipment.tracking, target: '_blank' %>
+            <strong><%= Spree.t(:tracking) %>:</strong>
+             <%= link_to(shipment.tracking, shipment.tracking,target: '_blank') %>
           <% else %>
             <%= Spree.t(:no_tracking_present) %>
           <% end %>

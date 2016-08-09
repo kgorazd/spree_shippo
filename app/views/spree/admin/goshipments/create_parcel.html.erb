@@ -6,10 +6,11 @@
     <div id="ember1709" class="ember-view">
       <div id="ember1720" class="ember-view padding-v-sm border-1-b-grey hover-grey">
         <div class="row">
-            <%= form_tag admin_goshipments_transactions_path do %>
-              <% if @goshippo_ratelist["results"].present? %>
-                <%= hidden_field_tag :shipment_id, params[:shipment_id]%>
+          <% if @goshippo_ratelist["results"].present? %>
                 <% @goshippo_ratelist["results"].each do |result| %>
+                <%= form_tag admin_goshipments_transactions_path do %>
+                <%= hidden_field_tag :shipment_id, params[:shipment_id]%>
+                  <%= hidden_field_tag :object_id, result['object_id'] %>
                   <div style="height: 51px;">
                     <%= hidden_field_tag :object_id, (result['object_id']) %>
                     <div class="col-md-2 col-xs-12 hidden-sm">

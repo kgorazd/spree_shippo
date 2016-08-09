@@ -25,7 +25,7 @@ class Spree::Admin::GoshipmentsController < Spree::Admin::BaseController
           submition_date = (params['shipment_date'].to_time).utc.iso8601
           go_shippo_shipment = GoShippo::Shipment.create('PURCHASE', address_from, address_to, parcel, 'DROPOFF', submition_date, params[:insurance_amount], params[:insurance_currency], params[:Add_signature_confirmation])
           shipment.update_attributes(shipment_obj_id: go_shippo_shipment['object_id'])
-          @goshippo_ratelist = GoShippo::Rate.get(shipment.shipment_obj_id)
+          @goshippo_ratelist = GoShippo::Rate.get(go_shippo_shipment['object_id'])
           if @goshippo_ratelist['count'] == 0
             redirect_to :back, flash: { error: 'Invalid Order Details' }
           end
@@ -40,6 +40,8 @@ class Spree::Admin::GoshipmentsController < Spree::Admin::BaseController
     begin
       transaction_object = GoShippo::Transaction.create(params['object_id'])
       shipment = Spree::Shipment.find(params[:shipment_id])
+      
+      @order = Spree::Order.find(shipment.order_id)
       
       shipment.update_attributes(transaction_obj_id: transaction_object['object_id'])
       @transactions_ship = transaction_object
@@ -77,7 +79,7 @@ class Spree::Admin::GoshipmentsController < Spree::Admin::BaseController
     submition_date = (params['shipment_date'].to_time).utc.iso8601
     go_shippo_return_shipment = GoShippo::ReturnLabel.create('PURCHASE', address_from, address_to, parcel, 'PICKUP', return_of, submition_date, params[:insurance_amount], params[:insurance_currency])
     shipment.update_attributes(return_shipment_obj_id: go_shippo_return_shipment['object_id'])
-    @goshippo_ratelist = GoShippo::Rate.get(shipment.return_shipment_obj_id)
+    @goshippo_ratelist = GoShippo::Rate.get(go_shippo_return_shipment['object_id'])
     if @goshippo_ratelist['count'] == 0
       redirect_to :back, flash: { error: 'Invalid Order Details' }
     end
